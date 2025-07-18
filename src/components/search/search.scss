@@ -1,0 +1,15 @@
+.search {
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+  display: flex;
+  .search-input {
+    width: 100%;
+    background-color: var(--background-secondary);
+    border: none;
+    padding: 6px;
+  }
+  .search-button {
+    background: none;
+    border: none;
+  }
+}
