@@ -1,0 +1,25 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  .product-image {
+    img {
+      object-fit: cover;
+      aspect-ratio: 4/5;
+      width: 100%;
+    }
+  }
+  .product-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px 0;
+    .product-title {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      div:nth-child(2) {
+        color: var(--text-secondary);
+      }
+    }
+  }
+}

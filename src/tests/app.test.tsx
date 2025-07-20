@@ -9,7 +9,7 @@ test('renders title', () => {
   render(
     <Provider store={store}>
       <App />
-    </Provider>
+    </Provider>,
   );
   expect(screen.getByText(/Hello React/i)).toBeInTheDocument();
 });

@@ -1,2 +1,7 @@
 .product-list-page {
+  .product-list-main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 }

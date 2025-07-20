@@ -1,12 +1,17 @@
 .search {
   background-color: var(--background-secondary);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   display: flex;
   .search-input {
     width: 100%;
     background-color: var(--background-secondary);
     border: none;
-    padding: 6px;
+    padding: 20px;
+    color: var(--text-secondary);
+  }
+  .search-input::placeholder {
+    color: var(--text-secondary);
+    font-size: 14px;
   }
   .search-button {
     background: none;

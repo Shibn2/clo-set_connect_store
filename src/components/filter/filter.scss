@@ -1,0 +1,44 @@
+.filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  .filter-form {
+    color: var(--text-secondary);
+  }
+  input {
+    background-color: var(--background-secondary);
+  }
+
+  input[type='checkbox'] {
+    width: 15px;
+    height: 15px;
+    background-color: var(--background-secondary);
+    margin-bottom: -3px;
+    border: 1px solid #333;
+    border-radius: 4px; // square with slight rounding
+    appearance: none; // remove default OS style
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #007bff; // checked background
+      border-color: #007bff;
+    }
+
+    &:checked::before {
+      display: block;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      line-height: 18px;
+    }
+  }
+  .filter-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-primary);
+  }
+}
