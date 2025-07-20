@@ -4,11 +4,12 @@ import ProductGrid from '../productGrid/productGrid';
 import Search from '../search/search';
 import './productListPage.scss';
 import useQuery from '../../hooks/useQueryHook';
-import { PricingOption, product } from '../../types';
+import { FilterState, PricingOption, product } from '../../types';
 import { AppDispatch, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPricingOptions, setSearchTerm } from '../../redux/filterSlice';
 import { filterProductList, setProductList, updateProductList } from '../../redux/productSlice';
+import { CLOSET_LABEL, LOADING } from '../../constants';
 
 const ProductListPage = () => {
   const [loading, setLoading] = useState(false);
@@ -16,21 +17,35 @@ const ProductListPage = () => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { get, set: setQueryParam, clearAll: clearAllQueryParams } = useQuery();
+  const { getAll: getQueryParams, set: setQueryParam, clearAll: clearAllQueryParams } = useQuery();
   const filters = useSelector((state: RootState) => state.filters);
   const selectedPricingOptions = useSelector((state: RootState) => state.filters.pricingOptions);
+  const searchTerm = useSelector((state: RootState) => state.filters.searchTerm);
 
-  const updateList = () => {
-    console.log('update!!');
-  };
-
+  // Fetch products from remote
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     const URL = 'https://closet-recruiting-api.azurewebsites.net/api/data';
     try {
       const result = await fetch(URL);
       const data: product[] = await result.json();
+      const queryParams = getQueryParams();
       dispatch(setProductList(data));
+      if (queryParams.search || queryParams.priceOption) {
+        const payload: FilterState = {
+          searchTerm: '',
+          pricingOptions: [],
+        };
+        if (queryParams.search) {
+          payload.searchTerm = queryParams.search;
+          dispatch(setSearchTerm(queryParams.search));
+        }
+        if (queryParams.priceOption) {
+          payload.pricingOptions = queryParams.priceOption.split(',').map((val) => Number(val));
+          dispatch(setPricingOptions(payload.pricingOptions));
+        }
+        dispatch(filterProductList(payload));
+      }
     } catch (err) {
       console.error('Error on product fetch', err);
     } finally {
@@ -38,6 +53,7 @@ const ProductListPage = () => {
     }
   }, [dispatch]);
 
+  // Intersection Observer: on intersect update the productList
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,13 +73,10 @@ const ProductListPage = () => {
     };
   }, [loaderRef]);
 
-  // Initial load
+  // Initial load of product data from remote
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  // Intersection Observer: on intersect update the productList
-  useEffect(() => {}, [loading, hasMore, fetchProducts]);
 
   // Searcch input change handler
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,14 +102,15 @@ const ProductListPage = () => {
 
   return (
     <div className="product-list-page">
-      <header>
-        <h3>Closet</h3>
+      <header className="product-list-header">
+        <h3>{CLOSET_LABEL}</h3>
       </header>
       <main className="product-list-main">
         <Search
           onChangeHandler={onChangeHandler}
           onBlurHandler={() => {}}
           onFocusChange={() => {}}
+          searchTerm={searchTerm}
         />
         <Filter
           selectedFilters={selectedPricingOptions}
@@ -104,7 +118,7 @@ const ProductListPage = () => {
         />
         <ProductGrid />
         <div ref={loaderRef} style={{ height: 1 }} />
-        {loading && <p style={{ textAlign: 'center' }}>Loading...</p>}
+        {loading && <p style={{ textAlign: 'center' }}>{LOADING}</p>}
       </main>
     </div>
   );

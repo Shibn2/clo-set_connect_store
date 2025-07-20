@@ -1,3 +1,4 @@
+import { PRICING_OPTION_LABEL, RESET_LABEL } from '../../constants';
 import { PricingOption } from '../../types';
 import './filter.scss';
 
@@ -16,22 +17,8 @@ const Filter: React.FC<filterPropTypes> = ({ onChangeFilterHandler, selectedFilt
   return (
     <div className="filter">
       <div className="filter-form">
-        <span className="body-text">Pricing options</span>
-        {/* <span>
-          <input onChange={onChangeFilterHandler} value={'paid'} name="paid" type="checkbox" /> Paid
-        </span>
-        <span>
-          <input onChange={onChangeFilterHandler} value={'free'} name="free" type="checkbox" /> Free
-        </span>
-        <span>
-          <input
-            onChange={onChangeFilterHandler}
-            value={'view only'}
-            name="view only"
-            type="checkbox"
-          />{' '}
-          View Only
-        </span> */}
+        <span className="body-text">{PRICING_OPTION_LABEL}</span>
+
         {Object.values(PricingOption)
           .filter((value) => typeof value === 'number')
           .map((value) => (
@@ -48,7 +35,7 @@ const Filter: React.FC<filterPropTypes> = ({ onChangeFilterHandler, selectedFilt
             </label>
           ))}
       </div>
-      <button className="filter-button body-text">RESET</button>
+      <button className="filter-button body-text">{RESET_LABEL}</button>
     </div>
   );
 };

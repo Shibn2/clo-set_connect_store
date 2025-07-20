@@ -1,3 +1,4 @@
+import { FREE_LABEL, NA, VIEW_ONLY_LABEL } from '../../constants';
 import { PricingOption, product } from '../../types';
 import './productCard.scss';
 
@@ -6,11 +7,11 @@ const getPricingOption = (pricingOption: number, price: number) => {
     case PricingOption.PAID:
       return `$${price}`;
     case PricingOption.FREE:
-      return 'Free';
+      return FREE_LABEL;
     case PricingOption.VIEW_ONLY:
-      return 'View only';
+      return VIEW_ONLY_LABEL;
     default:
-      return 'N/A';
+      return NA;
   }
 };
 
@@ -45,12 +46,3 @@ const ProductCard: React.FC<product> = ({
 };
 
 export default ProductCard;
-
-// {
-//     "id": "content-001",
-//     "creator": "Adam",
-//     "title": "Yellow green coat",
-//     "pricingOption": 0,
-//     "imagePath": "https://closetfrontrecruiting.blob.core.windows.net/images/thumbnail_1.jpeg",
-//     "price": 50
-//   },

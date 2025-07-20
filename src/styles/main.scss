@@ -17,6 +17,7 @@
   --screen-lg: 1440px;
 }
 
+$screen-sm: var(--screen-sm);
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -28,7 +29,7 @@ body {
 //typography
 .body-text {
   font-size: 13px;
-  @media screen and (width: var(--screen-sm)) {
+  @media screen and (width: var($screen-sm)) {
     font-size: 16px;
   }
 }
