@@ -5,6 +5,7 @@ import './filter.scss';
 type filterPropTypes = {
   selectedFilters: PricingOption[];
   onChangeFilterHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  resetClick: () => void;
 };
 
 const pricingLabels: Record<PricingOption, string> = {
@@ -13,7 +14,11 @@ const pricingLabels: Record<PricingOption, string> = {
   [PricingOption.VIEW_ONLY]: 'View only',
 };
 
-const Filter: React.FC<filterPropTypes> = ({ onChangeFilterHandler, selectedFilters }) => {
+const Filter: React.FC<filterPropTypes> = ({
+  onChangeFilterHandler,
+  selectedFilters,
+  resetClick,
+}) => {
   return (
     <div className="filter">
       <div className="filter-form">
@@ -35,7 +40,9 @@ const Filter: React.FC<filterPropTypes> = ({ onChangeFilterHandler, selectedFilt
             </label>
           ))}
       </div>
-      <button className="filter-button body-text">{RESET_LABEL}</button>
+      <button onClick={resetClick} className="filter-button body-text">
+        {RESET_LABEL}
+      </button>
     </div>
   );
 };

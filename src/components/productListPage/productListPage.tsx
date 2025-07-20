@@ -100,6 +100,12 @@ const ProductListPage = () => {
     dispatch(filterProductList({ ...filters, pricingOptions: updatedFilters }));
   };
 
+  // Handle reset click
+  const resetClick = () => {
+    setQueryParam({ priceOption: '', search: '' });
+    window.location.reload();
+  };
+
   return (
     <div className="product-list-page">
       <header className="product-list-header">
@@ -115,6 +121,7 @@ const ProductListPage = () => {
         <Filter
           selectedFilters={selectedPricingOptions}
           onChangeFilterHandler={onChangeFilterHandler}
+          resetClick={resetClick}
         />
         <ProductGrid />
         <div ref={loaderRef} style={{ height: 1 }} />
